@@ -128,10 +128,6 @@ public class Player : MonoBehaviour
     
     
     
-    
-    
-    
-    
     public float platformhizlandirici()
     {
         if(platformhizi <= 10f)
@@ -145,11 +141,9 @@ public class Player : MonoBehaviour
         }
         return platformhizi;
     }
-
-
-
+    
 }
-// safffax
+
 
 
 
