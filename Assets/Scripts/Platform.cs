@@ -7,7 +7,7 @@ public class Platform : MonoBehaviour
 {
     Transform transform1;
 
-    void Start()
+    void Start() 
     {
         transform1 = GetComponent<Transform>();
         Destroy(gameObject,10);
@@ -22,4 +22,4 @@ public class Platform : MonoBehaviour
     {
         transform1.position = new Vector2(transform1.position.x - Time.deltaTime * 5f, transform1.position.y); 
     }   
-}
+} 
