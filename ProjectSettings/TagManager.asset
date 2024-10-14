@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Dead
   - Fall voice
+  - player
   layers:
   - Default
   - TransparentFX

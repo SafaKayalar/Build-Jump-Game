@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,11 +14,10 @@ public class Player : MonoBehaviour
     public float jumpspeed = 6.5f;
     public int score;
     public float platformhizi;
-    float platformhizartirici;
-    float platformhizartissuresi = 10f;
     bool touchwall;
     public AudioSource jumpSound;
-    public AudioSource walkSound;
+    public AudioSource walkSound;    
+    bool scoreartir;
 
     public AudioSource runSound;    
     void Start()
@@ -25,8 +25,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        platformhizartirici = 0;
         platformhizi = 5f;
+        scoreartir = false;
         
     }
     void Update()
@@ -124,19 +124,20 @@ public class Player : MonoBehaviour
         walkSound.Stop();
         runSound.Stop();
     }
-    
-    
-    
-    
+     
     public float platformhizlandirici()
     {
         if(platformhizi <= 10f)
         {
-            platformhizartirici += Time.deltaTime;
-            if (platformhizartirici >= platformhizartissuresi)
+            
+            if (score%5 == 0 && score !=0 && scoreartir == false)
             {
                 platformhizi += 0.2f;
-                platformhizartirici = 0;
+                scoreartir = true;
+            }
+            if (score%5 == 1)
+            {
+                scoreartir = false;
             }
         }
         return platformhizi;
