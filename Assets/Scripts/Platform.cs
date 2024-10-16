@@ -9,13 +9,10 @@ public class Platform : MonoBehaviour
     private Player player;
     void Start() 
     {
-        // Player tag'ine sahip GameObject'i bul
         GameObject playerObject = GameObject.FindWithTag("player");
 
-        // Eğer playerObject null değilse
         if (playerObject != null)
         {
-            // Player bileşenini al
             player = playerObject.GetComponent<Player>();
         }
         transform1 = GetComponent<Transform>();

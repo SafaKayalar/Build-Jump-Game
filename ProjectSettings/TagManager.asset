@@ -10,6 +10,7 @@ TagManager:
   - Dead
   - Fall voice
   - player
+  - Play Area
   layers:
   - Default
   - TransparentFX

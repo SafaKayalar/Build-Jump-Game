@@ -4,6 +4,8 @@ using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -18,6 +20,9 @@ public class Player : MonoBehaviour
     public AudioSource jumpSound;
     public AudioSource walkSound;    
     bool scoreartir;
+    bool gamescreen = false;
+    public Text playtext;
+    public GameObject playpanel;
 
     public AudioSource runSound;    
     void Start()
@@ -26,13 +31,16 @@ public class Player : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         platformhizi = 5f;
-        scoreartir = false;
+        scoreartir = false;    
+        playtext.text = ""; 
+        playpanel.SetActive(false);
         
     }
     void Update()
     {
         hareket();
         platformhizlandirici();
+        GameScreen();
     }
 
     void hareket()
@@ -74,30 +82,32 @@ public class Player : MonoBehaviour
         }
         
     }
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if(other.gameObject.CompareTag("Score Area"))
+        if(collision.gameObject.CompareTag("Score Area"))
         {
             score ++;
-            Destroy(other.gameObject);
+            Destroy(collision.gameObject);
         }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Wall")) 
+        
+        if(collision.gameObject.CompareTag("Play Area"))
         {
-            touchwall = true;
+            gamescreen = true;
+            playtext.text = "Baslamak icin \"Space\" basiniz"; 
+            playpanel.SetActive(true);
         }
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Wall")) 
-        {
-            touchwall = false;
-        }
-    }
 
+    }
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Play Area"))
+        {
+            gamescreen = false;
+            playtext.text = " "; 
+            playpanel.SetActive(false); 
+        }
+    }
+    
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Dead"))
@@ -105,26 +115,25 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene("Play Again Menu");
         }
     }
-
     
-    
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall")) 
+        {
+            touchwall = false;
+        }
 
-    public void walkingsound()
-    {
-        walkSound.Play();
-        runSound.Stop();
     }
-    public void runningsound()
+    
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        runSound.Play();
-        walkSound.Stop();
+        if (collision.gameObject.CompareTag("Wall")) 
+        {
+            touchwall = true;
+        }
     }
-    public void seslerisustur()
-    {
-        walkSound.Stop();
-        runSound.Stop();
-    }
-     
+
+
     public float platformhizlandirici()
     {
         if(platformhizi <= 10f)
@@ -142,7 +151,29 @@ public class Player : MonoBehaviour
         }
         return platformhizi;
     }
-    
+    public void walkingsound()
+    {
+        walkSound.Play();
+        runSound.Stop();
+    }
+    public void runningsound()
+    {
+        runSound.Play();
+        walkSound.Stop();
+    }
+    public void seslerisustur()
+    {
+        walkSound.Stop();
+        runSound.Stop();
+    }   
+
+    public void GameScreen()
+    {
+        if(gamescreen == true && Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("Game");
+        }
+    }
 }
 
 
