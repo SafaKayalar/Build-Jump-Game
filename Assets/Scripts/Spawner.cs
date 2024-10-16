@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour
         spawnlayici += Time.deltaTime;
         if(spawnlayici >= spawnsuresi)
         {
-            Instantiate(platform, new Vector2(19,Random.Range(-5,3)), transform.rotation);       
+            Instantiate(platform, new Vector2(19,Random.Range(-5,2)), transform.rotation);       
             spawnlayici = 0;
         }
     }
